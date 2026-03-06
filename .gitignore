@@ -1,0 +1,6 @@
+.DS_Store
+*.swp
+*.swo
+
+# Reference files contain private course notes — not for public distribution
+skills/*/references/

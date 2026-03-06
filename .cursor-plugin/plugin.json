@@ -1,0 +1,30 @@
+{
+  "name": "pmf-skills",
+  "displayName": "PMF Skills",
+  "version": "1.0.0",
+  "description": "4-skill workflow for structured product-market fit discovery. Build and validate PMF hypotheses across 6 dimensions — from initial hypothesis through market research, expert synthesis, and targeted validation.",
+  "author": {
+    "name": "George Nurijanian",
+    "url": "https://github.com/gnurio"
+  },
+  "repository": "https://github.com/gnurio/pmf-plugin",
+  "license": "MIT",
+  "keywords": [
+    "pmf",
+    "product-market-fit",
+    "product-management",
+    "startups",
+    "validation",
+    "hypothesis",
+    "market-research"
+  ],
+  "category": "productivity",
+  "tags": [
+    "product",
+    "research",
+    "strategy",
+    "b2b",
+    "saas"
+  ],
+  "skills": "./skills/"
+}
