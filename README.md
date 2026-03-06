@@ -88,6 +88,32 @@ Confidence scores run 1–10 per dimension. V1 hypotheses typically sit at 4–6
 
 ---
 
+## In action
+
+The workflow runs inside Cursor's agent chat. All output lands in structured markdown files your agent can read back on the next run.
+
+**Step 1 — Trigger the skill and answer two questions**
+
+![Skill trigger: product type and org context](images/01-skill-trigger.png)
+
+**Step 2 — Define the problem using the outcome-motivation gap framework**
+
+![Problem dimension walkthrough](images/02-problem-dimension.png)
+
+**Step 3 — Assign honest confidence scores across all 6 dimensions**
+
+![6-dimension confidence scoring table](images/03-confidence-scores.png)
+
+**Step 4 — V1 narrative written, riskiest dimension flagged**
+
+![V1 narrative complete with risk summary](images/04-v1-complete.png)
+
+**Step 5 — Run market research: 6 parallel agents, analogs + antilogs**
+
+![Market research results: 23 analogs, 18 antilogs, confidence 3.5→6.5](images/05-market-research.png)
+
+---
+
 ## Installation
 
 In Cursor, run:

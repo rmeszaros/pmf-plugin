@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440">
+<title>PMF Skills — Cursor Mockup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #1C1C1C;
+    color: #CCCCCC;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .scene {
+    width: 1440px;
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    background: #1C1C1C;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── Title bar ── */
+  .titlebar {
+    height: 38px;
+    background: #252526;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+    flex-shrink: 0;
+    border-bottom: 1px solid #1A1A1A;
+    user-select: none;
+  }
+  .traffic-lights { display: flex; gap: 7px; align-items: center; }
+  .tl { width: 12px; height: 12px; border-radius: 50%; }
+  .tl-red    { background: #FF5F57; }
+  .tl-yellow { background: #FFBD2E; }
+  .tl-green  { background: #28CA42; }
+  .titlebar-center {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #808080;
+    letter-spacing: 0.1px;
+  }
+  .titlebar-right { width: 66px; }
+
+  /* ── Tab bar ── */
+  .tabbar {
+    height: 35px;
+    background: #252526;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 0 0 220px;
+    border-bottom: 1px solid #1A1A1A;
+    flex-shrink: 0;
+  }
+  .tab {
+    height: 35px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #808080;
+    background: #2D2D2D;
+    border-right: 1px solid #1A1A1A;
+    cursor: default;
+  }
+  .tab.active {
+    background: #1E1E1E;
+    color: #CCCCCC;
+    border-top: 1px solid #007ACC;
+    border-bottom: none;
+  }
+  .tab-icon { width: 14px; height: 14px; display: inline-block; }
+  .tab-close { color: #808080; font-size: 10px; margin-left: 4px; opacity: 0.6; }
+
+  /* ── Main layout ── */
+  .main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* ── Activity bar ── */
+  .activitybar {
+    width: 48px;
+    background: #333333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 8px;
+    gap: 4px;
+    flex-shrink: 0;
+    border-right: 1px solid #1A1A1A;
+  }
+  .ab-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #858585;
+    font-size: 16px;
+    cursor: default;
+  }
+  .ab-icon.active { color: #CCCCCC; background: rgba(255,255,255,0.08); }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: 220px;
+    background: #252526;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-right: 1px solid #1A1A1A;
+    overflow: hidden;
+  }
+  .sidebar-header {
+    padding: 10px 12px 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #BBBBBB;
+    flex-shrink: 0;
+  }
+  .sidebar-tree { flex: 1; overflow: hidden; padding: 2px 0; }
+  .tree-item {
+    display: flex;
+    align-items: center;
+    height: 22px;
+    padding-left: 8px;
+    gap: 4px;
+    cursor: default;
+    color: #CCCCCC;
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+  .tree-item:hover { background: rgba(255,255,255,0.05); }
+  .tree-item.active { background: #094771; }
+  .tree-item.folder { color: #E2C08D; }
+  .tree-item.indent-1 { padding-left: 20px; }
+  .tree-item.indent-2 { padding-left: 36px; }
+  .tree-item.indent-3 { padding-left: 52px; }
+  .tree-chevron { font-size: 9px; color: #808080; width: 10px; }
+  .tree-dot { width: 6px; height: 6px; border-radius: 50%; background: #4EC9B0; margin: 0 2px; flex-shrink: 0; }
+  .tree-dot-orange { background: #CE9178; }
+  .tree-dot-blue { background: #569CD6; }
+
+  /* ── Editor area (middle) ── */
+  .editor-area {
+    flex: 1;
+    background: #1E1E1E;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .editor-content {
+    flex: 1;
+    padding: 20px 28px;
+    overflow: hidden;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #D4D4D4;
+  }
+  .md-h1 { color: #569CD6; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .md-h2 { color: #4EC9B0; font-size: 13px; font-weight: 600; margin-top: 12px; margin-bottom: 2px; }
+  .md-h3 { color: #DCDCAA; font-size: 12.5px; font-weight: 600; margin-top: 8px; }
+  .md-bold { color: #9CDCFE; }
+  .md-dim { color: #6A9955; }
+  .md-key { color: #CE9178; }
+  .md-val { color: #4EC9B0; }
+  .md-line { margin: 2px 0; }
+  .md-sep { color: #444; margin: 8px 0; }
+  .md-tag { color: #569CD6; }
+  .md-badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: -apple-system, sans-serif;
+  }
+  .badge-green { background: rgba(78,201,176,0.15); color: #4EC9B0; }
+  .badge-yellow { background: rgba(255,189,46,0.15); color: #FFBD2E; }
+  .badge-red { background: rgba(255,95,87,0.15); color: #FF5F57; }
+
+  /* ── Chat panel ── */
+  .chat-panel {
+    width: 480px;
+    background: #1C1C1C;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #2D2D2D;
+    flex-shrink: 0;
+  }
+  .chat-header {
+    height: 40px;
+    background: #252526;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 8px;
+    border-bottom: 1px solid #1A1A1A;
+    flex-shrink: 0;
+  }
+  .chat-header-title { font-size: 12.5px; font-weight: 500; color: #CCCCCC; }
+  .chat-header-model {
+    margin-left: auto;
+    font-size: 11px;
+    color: #808080;
+    background: rgba(255,255,255,0.06);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .chat-messages {
+    flex: 1;
+    overflow: hidden;
+    padding: 12px 0 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .msg { padding: 6px 14px; display: flex; gap: 10px; }
+  .msg-user {
+    flex-direction: row-reverse;
+    gap: 8px;
+  }
+  .msg-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #007ACC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: white;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .msg-avatar-user {
+    background: linear-gradient(135deg, #6B48C8, #9B59B6);
+  }
+  .msg-body { flex: 1; min-width: 0; }
+  .msg-user .msg-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .msg-name { font-size: 11px; font-weight: 600; color: #CCCCCC; margin-bottom: 3px; }
+  .msg-bubble {
+    background: #2A2A2A;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #CCCCCC;
+    max-width: 360px;
+    word-break: break-word;
+  }
+  .msg-user .msg-bubble {
+    background: #0E4A7A;
+    border-radius: 10px 10px 2px 10px;
+  }
+  .msg-text {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #CCCCCC;
+    padding: 4px 0;
+  }
+  .msg-code {
+    font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 11.5px;
+    background: #0D0D0D;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 6px 0;
+    color: #D4D4D4;
+    line-height: 1.5;
+  }
+  .msg-code .kw { color: #569CD6; }
+  .msg-code .str { color: #CE9178; }
+  .msg-code .cmt { color: #6A9955; }
+  .inline-code {
+    font-family: 'Menlo', monospace;
+    font-size: 11.5px;
+    background: #0D0D0D;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: #CE9178;
+  }
+  .msg-section { margin-top: 8px; }
+  .msg-section-title { font-size: 11px; font-weight: 600; color: #808080; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+  .msg-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid #333;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    cursor: default;
+    font-size: 12.5px;
+  }
+  .msg-option:hover { background: rgba(255,255,255,0.07); }
+  .msg-option.selected { border-color: #007ACC; background: rgba(0,122,204,0.1); }
+  .option-radio {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    flex-shrink: 0;
+  }
+  .option-radio.checked { border-color: #007ACC; background: #007ACC; box-shadow: inset 0 0 0 3px #1C1C1C; }
+  .msg-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+    margin: 6px 0;
+  }
+  .msg-table th {
+    text-align: left;
+    padding: 5px 8px;
+    background: #1A1A1A;
+    color: #808080;
+    font-weight: 600;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #333;
+  }
+  .msg-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #252526;
+    color: #CCCCCC;
+  }
+  .msg-table tr:last-child td { border-bottom: none; }
+  .score-high { color: #4EC9B0; font-weight: 600; }
+  .score-mid  { color: #FFBD2E; font-weight: 600; }
+  .score-low  { color: #FF5F57; font-weight: 600; }
+  .score-risk { color: #FF5F57; font-weight: 700; }
+  .tag-risk {
+    display: inline-block;
+    background: rgba(255,95,87,0.15);
+    color: #FF5F57;
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+  .tag-ok {
+    display: inline-block;
+    background: rgba(78,201,176,0.1);
+    color: #4EC9B0;
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    margin-left: 4px;
+  }
+  .msg-callout {
+    background: rgba(0,122,204,0.08);
+    border-left: 3px solid #007ACC;
+    border-radius: 0 6px 6px 0;
+    padding: 7px 10px;
+    margin: 6px 0;
+    font-size: 12px;
+    color: #AAAAAA;
+  }
+  .msg-callout strong { color: #CCCCCC; }
+  .msg-success {
+    background: rgba(78,201,176,0.08);
+    border-left: 3px solid #4EC9B0;
+    border-radius: 0 6px 6px 0;
+    padding: 7px 10px;
+    margin: 6px 0;
+    font-size: 12px;
+  }
+  .msg-warning {
+    background: rgba(255,189,46,0.08);
+    border-left: 3px solid #FFBD2E;
+    border-radius: 0 6px 6px 0;
+    padding: 7px 10px;
+    margin: 6px 0;
+    font-size: 12px;
+    color: #CCCCCC;
+  }
+  .stat-row {
+    display: flex;
+    gap: 10px;
+    margin: 8px 0;
+  }
+  .stat-box {
+    flex: 1;
+    background: #1A1A1A;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 8px 10px;
+    text-align: center;
+  }
+  .stat-num { font-size: 20px; font-weight: 700; color: #4EC9B0; line-height: 1.2; }
+  .stat-num.orange { color: #CE9178; }
+  .stat-num.red { color: #FF5F57; }
+  .stat-num.blue { color: #569CD6; }
+  .stat-label { font-size: 10px; color: #808080; margin-top: 2px; }
+  .spinner {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #333;
+    border-top-color: #007ACC;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .agent-action {
+    font-size: 11.5px;
+    color: #808080;
+    padding: 3px 14px 3px 50px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .action-dot { width: 6px; height: 6px; border-radius: 50%; background: #007ACC; flex-shrink: 0; }
+  .skill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0,122,204,0.12);
+    border: 1px solid rgba(0,122,204,0.3);
+    border-radius: 12px;
+    padding: 3px 10px 3px 6px;
+    font-size: 11px;
+    color: #007ACC;
+    margin-bottom: 8px;
+  }
+  .skill-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #007ACC; }
+  .separator { height: 1px; background: #2A2A2A; margin: 6px 14px; }
+  .chat-input-area {
+    padding: 10px 12px;
+    border-top: 1px solid #2A2A2A;
+    background: #1C1C1C;
+    flex-shrink: 0;
+  }
+  .chat-input {
+    background: #252526;
+    border: 1px solid #3C3C3C;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    color: #808080;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chat-input-text { flex: 1; }
+  .chat-input-send {
+    width: 26px;
+    height: 26px;
+    background: #007ACC;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+  }
+
+  /* ── Status bar ── */
+  .statusbar {
+    height: 22px;
+    background: #007ACC;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 14px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    flex-shrink: 0;
+  }
+  .statusbar-item { display: flex; align-items: center; gap: 4px; }
+  .statusbar-right { margin-left: auto; display: flex; gap: 14px; }
+
+  /* ── SVG Icons ── */
+  .icon { display: inline-block; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCENE 1: Skill trigger + AskQuestion                           -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-1">
+  <div class="titlebar">
+    <div class="traffic-lights"><div class="tl tl-red"></div><div class="tl tl-yellow"></div><div class="tl tl-green"></div></div>
+    <div class="titlebar-center">pmf-anti-slop-scheduler — Cursor</div>
+    <div class="titlebar-right"></div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active">
+      <span style="color:#4EC9B0;font-size:11px;">●</span>
+      pmf-narrative.md
+      <span class="tab-close">✕</span>
+    </div>
+    <div class="tab">README.md <span class="tab-close">✕</span></div>
+  </div>
+  <div class="main">
+    <div class="activitybar">
+      <div class="ab-icon active">⎇</div>
+      <div class="ab-icon" style="margin-top:4px;">⊞</div>
+      <div class="ab-icon">🔍</div>
+      <div class="ab-icon">⚙</div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-header">Explorer</div>
+      <div class="sidebar-tree">
+        <div class="tree-item folder"><span class="tree-chevron">▾</span> pmf-anti-slop-scheduler</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▾</span> <span class="folder">validation</span></div>
+        <div class="tree-item indent-2" style="color:#808080;">market-research-synthesis.md</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▸</span> <span class="folder">interviews</span></div>
+        <div class="tree-item indent-1 active"><span class="tree-dot"></span> pmf-narrative.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-orange"></span> pmf-narrative-prose.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-blue"></span> spec.md</div>
+        <div class="tree-item indent-1" style="color:#808080;">voxprint-landing.html</div>
+        <div style="height:10px;"></div>
+        <div class="tree-item folder"><span class="tree-chevron">▸</span> pmf-card-trading</div>
+        <div class="tree-item folder"><span class="tree-chevron">▸</span> pmf-onboarding-tool</div>
+      </div>
+    </div>
+    <div class="editor-area" style="display:none;"></div>
+    <div class="chat-panel" style="width:672px;">
+      <div class="chat-header">
+        <span style="font-size:14px;">💬</span>
+        <span class="chat-header-title">Agent</span>
+        <span class="chat-header-model">claude-4.5-sonnet</span>
+      </div>
+      <div class="chat-messages">
+        <div class="msg msg-user">
+          <div class="msg-avatar msg-avatar-user">GN</div>
+          <div class="msg-body">
+            <div class="msg-bubble">I want to build a social media scheduler that creates authentic AI-generated content — I'm calling it the Anti-Slop Scheduler. I need to validate PMF before I build. Where do I start?</div>
+          </div>
+        </div>
+        <div style="height:8px;"></div>
+        <div class="msg">
+          <div class="msg-avatar">✦</div>
+          <div class="msg-body">
+            <div class="skill-badge"><div class="skill-badge-dot"></div> pmf-hypothesis-builder</div>
+            <div class="msg-text"><em style="color:#808080;">"Under the bridge downtown, is where I drew some blood..."</em></div>
+            <div class="msg-text" style="margin-top:6px;">Let's build your V1 PMF narrative across 6 dimensions. Before we start, a couple of quick questions.</div>
+            <div class="msg-section" style="margin-top:10px;">
+              <div class="msg-section-title">Product Type</div>
+              <div class="msg-option selected"><div class="option-radio checked"></div>B2B SaaS</div>
+              <div class="msg-option"><div class="option-radio"></div>B2C SaaS</div>
+              <div class="msg-option"><div class="option-radio"></div>Marketplace</div>
+              <div class="msg-option"><div class="option-radio"></div>DTC E-commerce</div>
+            </div>
+            <div class="msg-section" style="margin-top:8px;">
+              <div class="msg-section-title">Organisational Context</div>
+              <div class="msg-option selected"><div class="option-radio checked"></div>Zero-to-one startup (new company)</div>
+              <div class="msg-option"><div class="option-radio"></div>New product in established organisation</div>
+              <div class="msg-option"><div class="option-radio"></div>Product extension / feature expansion</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="chat-input">
+          <span class="chat-input-text" style="color:#444;">Ask anything...</span>
+          <div class="chat-input-send">↑</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="statusbar">
+    <div class="statusbar-item">⎇ main</div>
+    <div class="statusbar-item">✦ Agent</div>
+    <div class="statusbar-right">
+      <div class="statusbar-item">pmf-hypothesis-builder</div>
+      <div class="statusbar-item">Markdown</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCENE 2: Problem dimension walkthrough                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-2">
+  <div class="titlebar">
+    <div class="traffic-lights"><div class="tl tl-red"></div><div class="tl tl-yellow"></div><div class="tl tl-green"></div></div>
+    <div class="titlebar-center">pmf-anti-slop-scheduler — Cursor</div>
+    <div class="titlebar-right"></div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active"><span style="color:#4EC9B0;font-size:11px;">●</span> pmf-narrative.md <span class="tab-close">✕</span></div>
+    <div class="tab">spec.md <span class="tab-close">✕</span></div>
+  </div>
+  <div class="main">
+    <div class="activitybar">
+      <div class="ab-icon active">⎇</div>
+      <div class="ab-icon">⊞</div>
+      <div class="ab-icon">🔍</div>
+      <div class="ab-icon">⚙</div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-header">Explorer</div>
+      <div class="sidebar-tree">
+        <div class="tree-item folder"><span class="tree-chevron">▾</span> pmf-anti-slop-scheduler</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▾</span> <span class="folder">validation</span></div>
+        <div class="tree-item indent-2" style="color:#808080;">market-research-synthesis.md</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▸</span> <span class="folder">interviews</span></div>
+        <div class="tree-item indent-1 active"><span class="tree-dot"></span> pmf-narrative.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-orange"></span> pmf-narrative-prose.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-blue"></span> spec.md</div>
+        <div class="tree-item indent-1" style="color:#808080;">voxprint-landing.html</div>
+      </div>
+    </div>
+    <div class="chat-panel" style="width:672px;">
+      <div class="chat-header">
+        <span style="font-size:14px;">💬</span>
+        <span class="chat-header-title">Agent</span>
+        <span class="chat-header-model">claude-4.5-sonnet</span>
+      </div>
+      <div class="chat-messages">
+        <div class="msg">
+          <div class="msg-avatar">✦</div>
+          <div class="msg-body">
+            <div class="msg-text" style="color:#808080;font-size:11.5px;margin-bottom:6px;">Dimension 1 of 6 — Problem to Solve</div>
+            <div class="msg-text">Good. B2B SaaS, zero-to-one. Let's define your problem using the <strong>outcome-motivation gap</strong> framework. Three questions:</div>
+            <div class="msg-callout" style="margin-top:8px;">
+              <div><strong>What are customers trying to achieve?</strong></div>
+              <div style="margin-top:3px;color:#AAAAAA;font-size:12px;">Build their personal brand and generate business from sharing ideas at scale on LinkedIn/Threads</div>
+            </div>
+            <div class="msg-callout">
+              <div><strong>Why do they want this?</strong></div>
+              <div style="margin-top:3px;color:#AAAAAA;font-size:12px;">Recognition as expert (social) + generate leads and revenue from their audience (financial)</div>
+            </div>
+            <div class="msg-callout">
+              <div><strong>Why can't they do this right now?</strong></div>
+              <div style="margin-top:3px;color:#AAAAAA;font-size:12px;">AI tools produce detectable "slop" that damages authenticity — they face a trade-off: expensive ghostwriters, 60–90 min editing AI per post, or sacrifice authenticity</div>
+            </div>
+            <div class="msg-success" style="margin-top:8px;">
+              <div style="font-weight:600;color:#4EC9B0;margin-bottom:4px;">✓ Problem validated — framed as problem, not solution</div>
+              <div style="font-size:12px;color:#AAAAAA;">Thought leaders need to post consistently on LinkedIn/Threads (2–5x per week) to build authority, but current AI tools produce generic "slop" that audiences detect, causing engagement drops and brand damage.</div>
+            </div>
+          </div>
+        </div>
+        <div style="height:8px;"></div>
+        <div class="msg msg-user">
+          <div class="msg-avatar msg-avatar-user">GN</div>
+          <div class="msg-body">
+            <div class="msg-bubble">That's exactly it. The slop problem is real — I see consultants manually editing every AI post to remove the giveaway phrases. They spend more time editing than it saves.</div>
+          </div>
+        </div>
+        <div style="height:8px;"></div>
+        <div class="msg">
+          <div class="msg-avatar">✦</div>
+          <div class="msg-body">
+            <div class="msg-text">That's a strong earned insight — you've lived the problem. The editing overhead is the friction that validates acute pain. Moving to <strong>Dimension 2: Target Audience</strong>.</div>
+            <div class="msg-text" style="margin-top:6px;color:#808080;">Give me 2–3 attributes that define your most acute "now" segment...</div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="chat-input">
+          <span class="chat-input-text" style="color:#444;">Ask anything...</span>
+          <div class="chat-input-send">↑</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="statusbar">
+    <div class="statusbar-item">⎇ main</div>
+    <div class="statusbar-item">✦ Agent</div>
+    <div class="statusbar-right">
+      <div class="statusbar-item">Dimension 1/6 complete</div>
+      <div class="statusbar-item">Markdown</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCENE 3: Confidence scoring table                              -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-3">
+  <div class="titlebar">
+    <div class="traffic-lights"><div class="tl tl-red"></div><div class="tl tl-yellow"></div><div class="tl tl-green"></div></div>
+    <div class="titlebar-center">pmf-anti-slop-scheduler — Cursor</div>
+    <div class="titlebar-right"></div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active"><span style="color:#4EC9B0;font-size:11px;">●</span> pmf-narrative.md <span class="tab-close">✕</span></div>
+    <div class="tab">spec.md <span class="tab-close">✕</span></div>
+  </div>
+  <div class="main">
+    <div class="activitybar">
+      <div class="ab-icon active">⎇</div>
+      <div class="ab-icon">⊞</div>
+      <div class="ab-icon">🔍</div>
+      <div class="ab-icon">⚙</div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-header">Explorer</div>
+      <div class="sidebar-tree">
+        <div class="tree-item folder"><span class="tree-chevron">▾</span> pmf-anti-slop-scheduler</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▾</span> <span class="folder">validation</span></div>
+        <div class="tree-item indent-2" style="color:#808080;">market-research-synthesis.md</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▸</span> <span class="folder">interviews</span></div>
+        <div class="tree-item indent-1 active"><span class="tree-dot"></span> pmf-narrative.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-orange"></span> pmf-narrative-prose.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-blue"></span> spec.md</div>
+        <div class="tree-item indent-1" style="color:#808080;">voxprint-landing.html</div>
+      </div>
+    </div>
+    <div class="chat-panel" style="width:672px;">
+      <div class="chat-header">
+        <span style="font-size:14px;">💬</span>
+        <span class="chat-header-title">Agent</span>
+        <span class="chat-header-model">claude-4.5-sonnet</span>
+      </div>
+      <div class="chat-messages">
+        <div class="msg">
+          <div class="msg-avatar">✦</div>
+          <div class="msg-body">
+            <div class="msg-text">All 6 dimensions defined. Now let's assign confidence scores. <strong>Be honest</strong> — V1 hypotheses typically sit at 4–6/10. That's intentional.</div>
+            <div style="margin-top:10px;">
+              <table class="msg-table">
+                <thead>
+                  <tr>
+                    <th>Dimension</th>
+                    <th>Score</th>
+                    <th>Rationale</th>
+                    <th>Riskiest?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Problem to Solve</td>
+                    <td><span class="score-mid">5/10</span></td>
+                    <td style="color:#808080;font-size:11px;">Earned insight, but not externally validated yet</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>Target Audience</td>
+                    <td><span class="score-low">2/10</span></td>
+                    <td style="color:#808080;font-size:11px;">Narrow ICP assumption, untested</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>Value Proposition</td>
+                    <td><span class="score-mid">5/10</span></td>
+                    <td style="color:#808080;font-size:11px;">Resonates but unclear vs. alternatives</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>Competitive Advantage</td>
+                    <td><span class="score-low">2/10</span></td>
+                    <td style="color:#808080;font-size:11px;">Personalization moat is speculative at V1</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>Growth Strategy</td>
+                    <td><span class="score-mid">5/10</span></td>
+                    <td style="color:#808080;font-size:11px;">Channels identified, not proven</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>Business Model</td>
+                    <td><span class="score-low">2/10</span></td>
+                    <td style="color:#808080;font-size:11px;">Reverse trial unvalidated, LTV is a guess</td>
+                    <td>—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="msg-warning" style="margin-top:8px;">
+              <strong>Overall confidence: 3.5/10</strong> — Riskiest dimensions: Target Audience, Competitive Advantage, Business Model (all at 2/10). Run <span class="inline-code">/pmf-market-research</span> to validate with market evidence before interviewing customers.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="chat-input">
+          <span class="chat-input-text" style="color:#444;">Ask anything...</span>
+          <div class="chat-input-send">↑</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="statusbar">
+    <div class="statusbar-item">⎇ main</div>
+    <div class="statusbar-item">✦ Agent</div>
+    <div class="statusbar-right">
+      <div class="statusbar-item">Overall: 3.5/10</div>
+      <div class="statusbar-item">Markdown</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCENE 4: V1 narrative complete                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-4">
+  <div class="titlebar">
+    <div class="traffic-lights"><div class="tl tl-red"></div><div class="tl tl-yellow"></div><div class="tl tl-green"></div></div>
+    <div class="titlebar-center">pmf-anti-slop-scheduler — Cursor</div>
+    <div class="titlebar-right"></div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active"><span style="color:#4EC9B0;font-size:11px;">●</span> pmf-narrative.md <span class="tab-close">✕</span></div>
+    <div class="tab">spec.md <span class="tab-close">✕</span></div>
+  </div>
+  <div class="main">
+    <div class="activitybar">
+      <div class="ab-icon active">⎇</div>
+      <div class="ab-icon">⊞</div>
+      <div class="ab-icon">🔍</div>
+      <div class="ab-icon">⚙</div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-header">Explorer</div>
+      <div class="sidebar-tree">
+        <div class="tree-item folder"><span class="tree-chevron">▾</span> pmf-anti-slop-scheduler</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▾</span> <span class="folder">validation</span></div>
+        <div class="tree-item indent-2" style="color:#808080;">market-research-synthesis.md</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▸</span> <span class="folder">interviews</span></div>
+        <div class="tree-item indent-1 active"><span class="tree-dot"></span> pmf-narrative.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-orange"></span> pmf-narrative-prose.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-blue"></span> spec.md</div>
+        <div class="tree-item indent-1" style="color:#808080;">voxprint-landing.html</div>
+      </div>
+    </div>
+    <div class="chat-panel" style="width:672px;">
+      <div class="chat-header">
+        <span style="font-size:14px;">💬</span>
+        <span class="chat-header-title">Agent</span>
+        <span class="chat-header-model">claude-4.5-sonnet</span>
+      </div>
+      <div class="chat-messages">
+        <div class="msg">
+          <div class="msg-avatar">✦</div>
+          <div class="msg-body">
+            <div class="msg-success">
+              <div style="font-weight:700;color:#4EC9B0;font-size:13px;margin-bottom:6px;">✓ PMF Narrative V1 created</div>
+              <div style="margin-bottom:4px;"><strong style="color:#CCCCCC;">Product:</strong> <span style="color:#AAAAAA;">Anti-Slop Social Media Scheduler (B2B SaaS)</span></div>
+              <div style="margin-bottom:4px;"><strong style="color:#CCCCCC;">File saved:</strong> <span class="inline-code">pmf-anti-slop-scheduler/pmf-narrative.md</span></div>
+              <div><strong style="color:#CCCCCC;">Format:</strong> <span style="color:#AAAAAA;">Structured + Prose (both generated)</span></div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-box">
+                <div class="stat-num">3.5</div>
+                <div class="stat-label">Overall confidence</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num orange">2/10</div>
+                <div class="stat-label">Riskiest dimension</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num blue">6</div>
+                <div class="stat-label">Dimensions defined</div>
+              </div>
+            </div>
+            <div class="msg-warning" style="margin-top:2px;">
+              <div style="font-weight:600;margin-bottom:3px;">Riskiest dimension: Competitive Advantage — Anti-Slop Positioning</div>
+              <div style="font-size:12px;">Zero B2B SaaS analogs exist for anti-positioning. Consumer examples (7UP, Patagonia) required years of authentic foundation before campaign. Must test in 3 phases before committing.</div>
+            </div>
+            <div class="msg-text" style="margin-top:8px;color:#AAAAAA;font-size:12px;"><strong style="color:#CCCCCC;">Next step:</strong> Run <span class="inline-code">/pmf-market-research</span> — 6 parallel agents will validate each dimension with analogs ($10M+ revenue) and antilogs (documented failures).</div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="chat-input">
+          <span class="chat-input-text">/pmf-market-research</span>
+          <div class="chat-input-send">↑</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="statusbar">
+    <div class="statusbar-item">⎇ main</div>
+    <div class="statusbar-item">✦ Agent</div>
+    <div class="statusbar-right">
+      <div class="statusbar-item">V1 complete · 3.5/10</div>
+      <div class="statusbar-item">Markdown</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SCENE 5: Market research results                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-5">
+  <div class="titlebar">
+    <div class="traffic-lights"><div class="tl tl-red"></div><div class="tl tl-yellow"></div><div class="tl tl-green"></div></div>
+    <div class="titlebar-center">pmf-anti-slop-scheduler — Cursor</div>
+    <div class="titlebar-right"></div>
+  </div>
+  <div class="tabbar">
+    <div class="tab active"><span style="color:#4EC9B0;font-size:11px;">●</span> market-research-synthesis.md <span class="tab-close">✕</span></div>
+    <div class="tab">pmf-narrative.md <span class="tab-close">✕</span></div>
+  </div>
+  <div class="main">
+    <div class="activitybar">
+      <div class="ab-icon active">⎇</div>
+      <div class="ab-icon">⊞</div>
+      <div class="ab-icon">🔍</div>
+      <div class="ab-icon">⚙</div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-header">Explorer</div>
+      <div class="sidebar-tree">
+        <div class="tree-item folder"><span class="tree-chevron">▾</span> pmf-anti-slop-scheduler</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▾</span> <span class="folder">validation</span></div>
+        <div class="tree-item indent-2 active"><span class="tree-dot"></span> market-research-synthesis.md</div>
+        <div class="tree-item indent-1"><span class="tree-chevron">▸</span> <span class="folder">interviews</span></div>
+        <div class="tree-item indent-1"><span class="tree-dot"></span> pmf-narrative.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-orange"></span> pmf-narrative-prose.md</div>
+        <div class="tree-item indent-1"><span class="tree-dot-blue"></span> spec.md</div>
+        <div class="tree-item indent-1" style="color:#808080;">voxprint-landing.html</div>
+      </div>
+    </div>
+    <div class="chat-panel" style="width:672px;">
+      <div class="chat-header">
+        <span style="font-size:14px;">💬</span>
+        <span class="chat-header-title">Agent</span>
+        <span class="chat-header-model">claude-4.5-sonnet</span>
+      </div>
+      <div class="chat-messages">
+        <div class="msg">
+          <div class="msg-avatar">✦</div>
+          <div class="msg-body">
+            <div class="skill-badge"><div class="skill-badge-dot"></div> pmf-market-research</div>
+            <div class="msg-success">
+              <div style="font-weight:700;color:#4EC9B0;font-size:13px;margin-bottom:6px;">✓ Market Research Complete — 6 dimensions researched in parallel</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-box">
+                <div class="stat-num">23</div>
+                <div class="stat-label">Analogs found</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num orange">18</div>
+                <div class="stat-label">Antilogs found</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-num">6.5</div>
+                <div class="stat-label">New confidence</div>
+              </div>
+            </div>
+            <table class="msg-table" style="margin-top:6px;">
+              <thead>
+                <tr><th>Dimension</th><th>V1→V2</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Problem to Solve</td><td>5 → <span class="score-mid">6</span></td><td><span class="tag-ok">Validated</span></td></tr>
+                <tr><td>Target Audience</td><td>2 → <span class="score-high">7</span></td><td><span class="tag-ok">Validated</span></td></tr>
+                <tr><td>Value Proposition</td><td>5 → <span class="score-high">7</span></td><td><span class="tag-ok">Validated</span></td></tr>
+                <tr><td>Competitive Adv. (Personalisation)</td><td>2 → <span class="score-high">7</span></td><td><span class="tag-ok">Validated</span></td></tr>
+                <tr><td>Competitive Adv. (Anti-Slop)</td><td>2 → <span class="score-low">4</span></td><td><span class="tag-risk">At risk</span></td></tr>
+                <tr><td>Business Model</td><td>2 → <span class="score-high">7</span></td><td><span class="tag-ok">Validated</span></td></tr>
+              </tbody>
+            </table>
+            <div class="msg-warning" style="margin-top:8px;">
+              <strong>Riskiest: Anti-Slop Positioning (4/10)</strong> — Zero B2B SaaS analogs. Consumer precedent requires authentic foundation built over years (7UP 57yr, Patagonia 14yr). Test in 3 phases before committing to positioning.
+            </div>
+            <div class="msg-text" style="margin-top:6px;color:#AAAAAA;font-size:12px;"><strong style="color:#CCCCCC;">Next:</strong> Run <span class="inline-code">/pmf-research-synthesis</span> to update narrative V1→V2 with evidence and get your risk prioritisation report.</div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <div class="chat-input">
+          <span class="chat-input-text">/pmf-research-synthesis</span>
+          <div class="chat-input-send">↑</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="statusbar">
+    <div class="statusbar-item">⎇ main</div>
+    <div class="statusbar-item">✦ Agent</div>
+    <div class="statusbar-right">
+      <div class="statusbar-item">3.5/10 → 6.5/10 · 23 analogs · 18 antilogs</div>
+      <div class="statusbar-item">Markdown</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
