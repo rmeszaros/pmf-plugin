@@ -6,6 +6,8 @@
 skills/*/references/
 
 # Screenshot tooling — not needed in published plugin
+images/mockup.html
+images/screenshot.js
 images/node_modules/
 images/package.json
 images/package-lock.json
