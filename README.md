@@ -1,39 +1,92 @@
 # PMF Skills
 
-A 4-skill workflow for structured product-market fit discovery. Each skill is a guided agent workflow that takes you from a raw product idea to a validated, evidence-based hypothesis — without the months of manual research.
+**Stop guessing. Start validating.**
 
-## Who this is for
+Most product ideas die because teams build before they know what they're building *for*. PMF Skills gives your AI agent a structured workflow for product-market fit discovery — from a raw idea to an evidence-based hypothesis with ranked risks and a clear next step.
 
-- Founders validating a new product idea before building
-- Product managers launching a new product line inside an established company
-- Teams after a major pivot who need to restart PMF discovery
-- Anyone who wants a structured, repeatable approach to finding PMF — not just intuition
+4 skills. One afternoon. A V1 PMF narrative you can actually act on.
 
-## The workflow
+---
 
-The 4 skills form a deliberate sequence. Run them in order:
+## Get started in one command
 
 ```
-1. /pmf-hypothesis-builder   →   Build your V1 hypothesis (6 dimensions)
-2. /pmf-market-research      →   Validate with analogs & antilogs (parallel agents)
-3. /pmf-research-synthesis   →   Synthesize evidence, update to V2, find riskiest dimension
-4. /pmf-status               →   Check where you are and get your next recommended action
+/pmf-hypothesis-builder
 ```
 
-`/pmf-status` can be run at any time — it's a read-only snapshot of your current state.
+The agent walks you through 6 PMF dimensions interactively, assigns confidence scores, identifies your riskiest assumption, and writes your V1 narrative — structured or prose format. Takes 30–60 minutes. No prep needed.
 
-### The 6 PMF dimensions
+---
 
-Every skill works across the same 6 dimensions:
+## The transformation
+
+**Before**: A product idea, a lot of conviction, and no structured way to know if you're right.
+
+**After**: A written PMF hypothesis across 6 dimensions, evidence from market analogs and failure cases, a ranked risk table, and a specific next action — not "do more research."
+
+The smallest step that gets you there: run `/pmf-hypothesis-builder` with your product idea right now.
+
+---
+
+## The 4-skill workflow
+
+Run them in sequence. Each skill unlocks the next.
+
+```
+1. /pmf-hypothesis-builder   →   Build your V1 hypothesis (6 dimensions, 30–60 min)
+2. /pmf-market-research      →   Validate with analogs & antilogs via parallel agents (10–15 min)
+3. /pmf-research-synthesis   →   Synthesize evidence, score risk, update to V2 (20 min)
+4. /pmf-status               →   Check where you are and get your next action (anytime)
+```
+
+`/pmf-status` is read-only — safe to run anytime to reorient after a break.
+
+---
+
+## Pick your scenario
+
+**"I have a product idea but I've never structured it properly"**
+```
+/pmf-hypothesis-builder
+```
+Guides you through problem framing, target audience, value prop, competitive advantage, growth strategy, and business model. Produces a shareable narrative document.
+
+**"I've written a hypothesis but I don't know if the market supports it"**
+```
+/pmf-market-research
+```
+Launches 6 parallel research agents — one per dimension — to find successful analogs ($10M+ revenue) and documented failure cases. Weeks of manual research in 10–15 minutes.
+
+**"I have research and expert input and need to decide what to validate next"**
+```
+/pmf-research-synthesis
+```
+Calculates risk scores across all 6 dimensions using `(10 − Evidence Score) × Failure Impact`, identifies the single riskiest dimension, and updates your narrative from V1 to V2 with version history.
+
+**"I'm picking this back up and need to know where I left off"**
+```
+/pmf-status
+```
+Scans your project folder, detects which stage you're in, shows confidence scores for all dimensions, and tells you exactly which skill to run next.
+
+---
+
+## The 6 PMF dimensions
+
+Every skill works across the same framework:
 
 | # | Dimension | What it defines |
 |---|-----------|-----------------|
-| 1 | Problem to Solve | The acute, outcome-oriented problem — not solution-framed |
-| 2 | Target Audience | A specific "now" segment + future expansion path |
+| 1 | Problem to Solve | The acute, outcome-oriented problem — never solution-framed |
+| 2 | Target Audience | A specific "now" segment with clear expansion paths |
 | 3 | Value Proposition | Customer-centric benefits, not feature lists |
-| 4 | Competitive Advantage | Short-term gap + one of 7 long-term Powers |
+| 4 | Competitive Advantage | Short-term gap + one long-term defensible moat |
 | 5 | Growth Strategy | Traction channels (first customers) vs. scale channels |
 | 6 | Business Model | Revenue formula, pricing, LTV, cost structure |
+
+Confidence scores run 1–10 per dimension. V1 hypotheses typically sit at 4–6 — that's intentional. The workflow systematically raises them.
+
+---
 
 ## Installation
 
@@ -43,125 +96,71 @@ In Cursor, run:
 /add-plugin https://github.com/gnurio/pmf-plugin
 ```
 
-Or go to the [Cursor Marketplace](https://cursor.com/marketplace) and search **PMF Skills**.
-
-## Skills
-
-### `pmf-hypothesis-builder`
-
-**Trigger**: Starting a new PMF project, or formalizing an existing idea.
-
-Interactive guided session that builds your V1 PMF narrative across all 6 dimensions. Asks targeted questions, validates insight quality, assigns confidence scores (1–10), identifies the riskiest dimension, and generates a structured narrative document.
-
-**Outputs**:
-- `pmf-{product-name}/pmf-narrative.md` (structured or prose format)
-- Confidence scores per dimension
-- Recommended next step
-
-**Bundled assets**:
-- `pmf-narrative-template.md` — structured fill-in-the-blanks format
-- `pmf-narrative-template-prose.md` — narrative storytelling format for stakeholders
-- `narrative-writing-guide.md` — lessons from successful strategic narratives (e.g. Calendly)
-- `references/pmf-framework.md` — PMF framework reference (bring your own notes)
-
----
-
-### `pmf-market-research`
-
-**Trigger**: After building your V1 hypothesis and before customer interviews.
-
-Launches 6 parallel research agents — one per PMF dimension — to identify analogs (companies that succeeded with a similar approach, $10M+ revenue threshold) and antilogs (funded companies that failed). Reduces weeks of manual research to 10–15 minutes.
-
-**Outputs**:
-- `validation/market-research-synthesis.md` — full analog/antilog analysis per dimension
-- Updated confidence scores with evidence rationale
-- Risk ranking across all 6 dimensions
-
-**Bundled assets**:
-- `assets/market-research-synthesis-template.md` — synthesis report template
-- `references/analog-antilog-criteria.md` — quality standards for analog/antilog selection
-
----
-
-### `pmf-research-synthesis`
-
-**Trigger**: After market research is complete; optional expert calls can be incorporated.
-
-Calculates risk scores using `(10 - Evidence Score) × Failure Impact` for each dimension, identifies the single riskiest dimension requiring targeted validation, and updates the PMF narrative from V1 → V2 with evidence-based changes and version history.
-
-**Outputs**:
-- `pmf-narrative.md` updated to V2
-- `validation/risk-prioritization.md` — ranked risk table with rationale
-- Decision: Refinement / Pivot / Reset recommendation
-
-**Bundled assets**:
-- `assets/risk-prioritization-template.md` — risk scoring report template
-- `references/synthesis-framework.md` — evidence analysis methodology
-
----
-
-### `pmf-status`
-
-**Trigger**: Any time — starting a session, after completing a skill, before a stakeholder review.
-
-Read-only. Scans your PMF project folder, detects which stage you're in (Hypothesis → Broad Validation → Targeted Validation → Measurement), displays confidence scores for all 6 dimensions, and recommends the specific next skill to run.
-
-**No outputs** — status display only.
+Or search **PMF Skills** in the [Cursor Marketplace](https://cursor.com/marketplace).
 
 ---
 
 ## Example session
 
 ```
-You: "I want to validate my new B2B SaaS idea"
+You: "I want to build a B2B SaaS tool for remote engineering teams"
 
-→ Run /pmf-hypothesis-builder
-   Agent guides you through 6 dimensions interactively
-   Output: pmf-narrative.md V1, confidence: 5.2/10 average
-   Riskiest: Growth Strategy (3/10)
+→ /pmf-hypothesis-builder
+  Agent guides you through all 6 dimensions
+  Output: pmf-myproduct/pmf-narrative.md
+  Overall confidence: 5.2/10 · Riskiest: Growth Strategy (3/10)
 
-→ Run /pmf-market-research
-   6 parallel agents research analogs/antilogs across all dimensions
-   Output: market-research-synthesis.md (38 analogs, 12 antilogs)
+→ /pmf-market-research
+  6 parallel agents research analogs and antilogs
+  Output: validation/market-research-synthesis.md
+  38 analogs identified · 12 failure cases documented
 
-→ Run /pmf-research-synthesis
-   Risk scores calculated, narrative updated to V2
-   Output: risk-prioritization.md, pmf-narrative.md V2
-   Riskiest confirmed: Growth Strategy, Risk score: 28
+→ /pmf-research-synthesis
+  Risk scores calculated · Narrative updated to V2
+  Growth Strategy risk score: 28 · Recommendation: targeted validation
+  Output: validation/risk-prioritization.md + pmf-narrative.md V2
 
-→ Run /pmf-status
-   Stage: Broad Validation Complete
-   Next: /pmf-interview-prep (or targeted validation of Growth Strategy)
+→ /pmf-status
+  Stage: Broad Validation Complete
+  Next: Run targeted validation on Growth Strategy before building anything
 ```
 
-## Project folder structure
+---
 
-When you use these skills, they create and manage a project folder:
+## Your project folder
+
+Skills create and manage a structured folder automatically:
 
 ```
 pmf-{product-name}/
-├── pmf-narrative.md          ← Lives here, versioned (V1 → V2 → V3)
-├── research/
+├── pmf-narrative.md          ← Versioned (V1 → V2 → V3…)
 ├── validation/
 │   ├── market-research-synthesis.md
-│   ├── expert-notes.md       ← Manual (optional)
+│   ├── expert-notes.md       ← Add your own expert call notes here
 │   ├── risk-prioritization.md
 │   └── targeted-validation-plan.md
-├── interviews/
-│   └── debrief-*.md          ← Manual interview notes
+├── interviews/               ← Add customer interview debriefs here
 └── measurement/
-    └── pmf-metrics.md
+    └── pmf-metrics.md        ← Set up once you're building
 ```
 
-## What comes next
+---
 
-These 4 skills cover the first two stages of PMF discovery (Hypothesis + Broad Validation). Additional skills in the roadmap:
+## What comes after
 
-- `/pmf-interview-prep` — design the 30–50 customer interview script
-- `/pmf-interview-synthesis` — synthesize interview patterns across dimensions
-- `/pmf-validation-planner` — design targeted validation for the riskiest dimension
-- `/pmf-metrics-setup` — set up measurement once you're building
+These 4 skills cover hypothesis and broad validation. The roadmap:
+
+| Skill | Purpose |
+|-------|---------|
+| `/pmf-interview-prep` | Design a 30–50 customer interview script targeting your riskiest dimension |
+| `/pmf-interview-synthesis` | Extract patterns across interviews into updated hypotheses |
+| `/pmf-validation-planner` | Design targeted experiments for your riskiest dimension |
+| `/pmf-metrics-setup` | Set up measurement once you're building |
+
+---
 
 ## License
 
-MIT
+[CC BY 4.0](LICENSE) — free to use, share, and adapt with attribution.
+
+Built by [George Nurijanian](https://github.com/gnurio) · [prodmgmt.world](https://prodmgmt.world)
