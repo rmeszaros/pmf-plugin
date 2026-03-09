@@ -6,7 +6,7 @@
 
 Most product ideas die because teams build before they know what they're building *for*. PMF Skills gives your AI agent a structured workflow for product-market fit discovery — from a raw idea to an evidence-based hypothesis with ranked risks and a clear next step.
 
-4 skills. One afternoon. A V1 PMF narrative you can actually act on.
+5 skills. One afternoon. A V1 PMF narrative you can actually act on.
 
 ---
 
@@ -30,7 +30,7 @@ The smallest step that gets you there: run `/pmf-hypothesis-builder` with your p
 
 ---
 
-## The 4-skill workflow
+## The 5-skill workflow
 
 Run them in sequence. Each skill unlocks the next.
 
@@ -38,7 +38,8 @@ Run them in sequence. Each skill unlocks the next.
 1. /pmf-hypothesis-builder   →   Build your V1 hypothesis (6 dimensions, 30–60 min)
 2. /pmf-market-research      →   Validate with analogs & antilogs via parallel agents (10–15 min)
 3. /pmf-research-synthesis   →   Synthesize evidence, score risk, update to V2 (20 min)
-4. /pmf-status               →   Check where you are and get your next action (anytime)
+4. /pmf-validate             →   Extract assumptions from riskiest dimension, map & design experiment (30–45 min)
+5. /pmf-status               →   Check where you are and get your next action (anytime)
 ```
 
 `/pmf-status` is read-only — safe to run anytime to reorient after a break.
@@ -64,6 +65,12 @@ Launches 6 parallel research agents — one per dimension — to find successful
 /pmf-research-synthesis
 ```
 Calculates risk scores across all 6 dimensions using `(10 − Evidence Score) × Failure Impact`, identifies the single riskiest dimension, and updates your narrative from V1 to V2 with version history.
+
+**"I know my riskiest dimension — now I need to design a real experiment"**
+```
+/pmf-validate
+```
+Takes your riskiest dimension and extracts 9 specific assumptions across Desirability, Viability, and Feasibility. Walk through a 2×2 importance/evidence map, identify the single assumption most likely to break your idea, and get a structured experiment brief with run instructions, metrics, and success/failure signals.
 
 **"I'm picking this back up and need to know where I left off"**
 ```
@@ -148,9 +155,15 @@ You: "I want to build a B2B SaaS tool for remote engineering teams"
   Growth Strategy risk score: 28 · Recommendation: targeted validation
   Output: validation/risk-prioritization.md + pmf-narrative.md V2
 
+→ /pmf-validate
+  Input: "Growth Strategy — riskiest dimension"
+  9 assumptions extracted across Desirability, Viability, Feasibility
+  Riskiest assumption: "I believe consultants will switch tools if we promise better authenticity"
+  Experiment brief: Smoke Test · Setup: short · Evidence strength: medium
+
 → /pmf-status
-  Stage: Broad Validation Complete
-  Next: Run targeted validation on Growth Strategy before building anything
+  Stage: Assumption Validation In Progress
+  Next: Run smoke test, then interview 20 signups
 ```
 
 ---
