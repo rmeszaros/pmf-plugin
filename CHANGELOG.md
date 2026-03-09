@@ -7,6 +7,7 @@ All notable changes to this plugin are documented here.
 ### Added
 
 - `pmf-validate` — assumption-level validation skill using the Extract → Map → Test workflow: surfaces 9 DVF assumptions from your riskiest PMF dimension, critiques your assumption map placement, and designs a structured experiment brief with run instructions, metrics, and success/failure signals
+- Added `.claude/skills/`, `.claude/commands/`, and `.agents/skills/` structures for all 5 skills — the plugin now works natively in Cursor, Claude Code, and OpenAI Codex (community contribution by Akash Mahajan)
 
 ---
 
